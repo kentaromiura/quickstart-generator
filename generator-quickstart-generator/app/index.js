@@ -25,9 +25,13 @@ var QuickstartGeneratorGenerator = yeoman.generators.Base.extend({
             console.log('Running make');
             var temp = me.spawnCommand('make')
 
-            temp.stdout.pipe(process.stdout);
-            temp = me.spawnCommand('./node_modules/.bin/polpetta')
-            temp.stdout.pipe(process.stdout);
+            if(temp.stdout) temp.stdout.pipe(process.stdout);
+            temp = me.spawnCommand('./node_modules/.bin/polpetta', ['0.0.0.0:1337'])
+            if(temp.stdout) {
+              temp.stdout.pipe(process.stdout);
+            } else {
+              console.log('Running polpetta on 1337')
+            }
           }
         });
 
